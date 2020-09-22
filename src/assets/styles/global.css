@@ -8,6 +8,9 @@
     --color-text-grey: #999;
     --color-bg-hover: #f5f5f5;
     --color-scrollbar: rgba(0,0,0, 0.2);
+    --color-bg-chatIntro: #f8f9fa;
+    --color-border-green: #4adf83;
+    --color-text-grey-chatIntro: #525252;
 }
 
 * {

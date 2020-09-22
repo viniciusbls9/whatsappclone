@@ -47,13 +47,6 @@
   background-color: var(--color-scrollbar);
 }
 
-
-
-
-
-
-
-
 .content-area {
-
+  flex: 1;
 }
