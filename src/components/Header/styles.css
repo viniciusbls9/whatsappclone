@@ -1,0 +1,28 @@
+header {
+    height: 3.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+  
+  header .header--avatar {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+  }
+  
+  .header--buttons {
+    display: flex;
+  }
+  
+  .header--btn {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
