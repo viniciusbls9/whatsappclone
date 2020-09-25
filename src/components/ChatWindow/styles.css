@@ -1,0 +1,35 @@
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-window-header {
+    height: 60px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header-avatar {
+
+}
+
+.header-name {
+
+}
+
+.header-buttons {
+
+}
+
+.header-btn {
+
+}
