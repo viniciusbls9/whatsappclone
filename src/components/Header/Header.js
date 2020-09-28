@@ -6,7 +6,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import './styles.css';
 
-function Header({ user }) {
+function Header({ user, show, setShow }) {
+
+    const handleNewChat = () => {
+        setShow(true);
+    }
+
     return (
         <header>
             <img className="header--avatar" src={user.avatar} alt="" />
@@ -16,7 +21,7 @@ function Header({ user }) {
                     <DonutLargeIcon style={{ color: '#919191' }} />
                 </div>
 
-                <div className="header--btn">
+                <div onClick={handleNewChat} className="header--btn">
                     <ChatIcon style={{ color: '#919191' }} />
                 </div>
 
