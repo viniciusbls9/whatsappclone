@@ -12,17 +12,22 @@ import './App.css';
 export default () => {
 
   const [chatList, setChatList] = useState([
-    {chatId: 1, title: 'Fulano', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4'},
-    {chatId: 2, title: 'Ciclaro', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4'},
-    {chatId: 3, title: 'Beltrano', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4'},
-    {chatId: 4, title: 'Mariangela', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4'},
+    { chatId: 1, title: 'Fulano', image: 'https://media-exp1.licdn.com/dms/image/C4D03AQGO3EqVOfMqGw/profile-displayphoto-shrink_800_800/0?e=1606953600&v=beta&t=CBL2R2fxKlPiMt9EU6d1Xrx4pRxeJP57NLSBdoARjH0' },
+    { chatId: 2, title: 'Ciclaro', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4' },
+    { chatId: 3, title: 'Beltrano', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4' },
+    { chatId: 4, title: 'Mariangela', image: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4' },
   ]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({
+    id: 0,
+    avatar: 'https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4',
+    name: 'Vinicius'
+  });
 
   return (
     <div className="app-window">
       <div className="sidebar">
-        <Header />
+        <Header user={user} />
         <div className="search">
           <div className="search--input">
             <SearchIcon fontSize="small" style={{ color: '#919191' }} />
@@ -44,7 +49,7 @@ export default () => {
 
       <div className="content-area">
         {activeChat.chatId !== undefined &&
-          <ChatWindow />
+          <ChatWindow user={user} />
         }
         {activeChat.chatId === undefined &&
           <ChatIntro />

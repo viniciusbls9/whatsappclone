@@ -6,10 +6,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import './styles.css';
 
-function Header() {
+function Header({ user }) {
     return (
         <header>
-            <img className="header--avatar" src="https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4" alt="" />
+            <img className="header--avatar" src={user.avatar} alt="" />
 
             <div className="header--buttons">
                 <div className="header--btn">

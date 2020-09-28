@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
 import MessageItem from '../MessageItem/MessageItem';
@@ -12,7 +12,9 @@ import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 import './styles.css';
 
-function ChatWindow() {
+function ChatWindow({ user }) {
+
+    const body = useRef();
 
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -23,8 +25,55 @@ function ChatWindow() {
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [text, setText] = useState('');
     const [listenig, setListening] = useState(false);
-    const [list, setList] = useState([]);
+    const [list, setList] = useState([
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
+        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
+        {author: 1  , body: 'oioioiioi'},
+        {author: 1, body: 'falfalfalfalfal'},
 
+    ]);
+
+    useEffect(() => {
+        if(body.current.scrollHeight > body.current.offsetHeight) {
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+        }
+    }, [list]);
+    
     const handleEmojiClick = (e, emojiObject) => {
         setText(text + emojiObject.emoji0);
     }
@@ -82,9 +131,13 @@ function ChatWindow() {
                 </div>
 
             </div>
-            <div className="chat-window-body">
+            <div ref={body} className="chat-window-body">
                 {list.map((item, key) => (
-                    <MessageItem key={key} data={item} />
+                    <MessageItem
+                        key={key}
+                        data={item}
+                        user={user}
+                    />
                 ))}
             </div>
 
