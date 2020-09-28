@@ -46,6 +46,7 @@
     align-items: center;
     cursor: pointer;
     overflow: hidden;
+    transition: all ease 0.3s;
 }
 
 .chat-window-body {

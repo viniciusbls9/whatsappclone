@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
+import MessageItem from '../MessageItem/MessageItem';
+
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -12,10 +14,19 @@ import './styles.css';
 
 function ChatWindow() {
 
+    let recognition = null;
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition !== undefined) {
+        recognition = new SpeechRecognition();
+    }
+
     const [emojiOpen, setEmojiOpen] = useState(false);
+    const [text, setText] = useState('');
+    const [listenig, setListening] = useState(false);
+    const [list, setList] = useState([]);
 
-    const handleEmojiClick = () => {
-
+    const handleEmojiClick = (e, emojiObject) => {
+        setText(text + emojiObject.emoji0);
     }
 
     const handleOpenEmoji = () => {
@@ -24,6 +35,26 @@ function ChatWindow() {
 
     const handleCloseEmoji = () => {
         setEmojiOpen(false);
+    }
+
+    const handleMicClick = () => {
+        if (recognition !== null) {
+            recognition.onstart = () => {
+                setListening(true)
+            }
+            recognition.onend = () => {
+                setListening(false);
+            }
+            recognition.onresult = (e) => {
+                setText(e.results[0][0].transcript);
+            }
+
+            recognition.start();
+        }
+    }
+
+    const handleSendClick = () => {
+
     }
 
 
@@ -51,7 +82,11 @@ function ChatWindow() {
                 </div>
 
             </div>
-            <div className="chat-window-body"></div>
+            <div className="chat-window-body">
+                {list.map((item, key) => (
+                    <MessageItem key={key} data={item} />
+                ))}
+            </div>
 
             <div className="chat-emoji-area" style={{ height: emojiOpen ? '200px' : '0px' }}>
                 <EmojiPicker
@@ -67,7 +102,7 @@ function ChatWindow() {
 
                     <div className="header-btn"
                         onClick={handleCloseEmoji}
-                        style={{ width: emojiOpen ? '40px' : '0px'}}
+                        style={{ width: emojiOpen ? '40px' : '0px' }}
                     >
                         <CloseIcon style={{ color: '#919191' }} />
                     </div>
@@ -84,15 +119,23 @@ function ChatWindow() {
                         className="chat-footer-input"
                         type="text"
                         placeholder="Digite uma mensagem"
+                        value={text}
+                        onChange={e => setText(e.target.value)}
                     />
                 </div>
 
                 <div className="chat-footer-pos">
+                    {text === '' &&
+                        <div onClick={handleMicClick} className="header-btn">
+                            <MicIcon style={{ color: listenig ? '#126ece' : '#919191' }} />
+                        </div>
+                    }
 
-                    <div className="header-btn">
-                        <SendIcon style={{ color: '#919191' }} />
-                    </div>
-
+                    {text !== '' &&
+                        <div onClick={handleSendClick} className="header-btn">
+                            <SendIcon style={{ color: '#919191' }} />
+                        </div>
+                    }
                 </div>
 
             </div>
