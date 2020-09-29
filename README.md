@@ -4,7 +4,9 @@ Clone do Whatsapp Web utilizando ReactJS e firebase. O foco do desenvolvimento d
 ## :art: Layout
 
 <p>
+    <p>Login com o Facebook</p>
   <img src="https://github.com/viniciusbls9/whatsappclone/blob/master/src/assets/git/login-facebook.png" width="100%" />
+    <p>Página inicial</p>
   <img src="https://github.com/viniciusbls9/whatsappclone/blob/master/src/assets/git/pagina-inicial.png" width="100%" />
   <img src="https://github.com/viniciusbls9/whatsappclone/blob/master/src/assets/git/chat.png" width="100%" />
 </p>
