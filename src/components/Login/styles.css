@@ -4,3 +4,17 @@
     justify-content: center;
     align-items: center;
 }
+
+button {
+    outline: 0;
+    border: 0;
+    background-color: #3b5998;
+    padding: 10px;
+    color: var(--color-bg-white);
+    display: flex;
+    align-items: center;
+}
+
+button span {
+    margin-left: 10px;
+}

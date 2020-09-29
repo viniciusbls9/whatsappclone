@@ -1,4 +1,5 @@
 import React from 'react';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 import Api from '../../Api';
 import './styles.css';
@@ -16,7 +17,10 @@ function Login({ onReceive }) {
 
     return (
         <div className="login">
-            <button onClick={handleFacebookLogin}>Logar com o Facebook</button>
+            <button onClick={handleFacebookLogin}>
+                <FacebookIcon />    
+                <span>Logar com o Facebook</span>
+            </button>
         </div>
     );
 }
