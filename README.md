@@ -21,7 +21,7 @@ Clone do Whatsapp Web utilizando ReactJS e firebase. O foco do desenvolvimento d
 - [x] Envio de emojis
 - [x] Envio de áudio (Aplicação pega o que o usuário está falando e transforma em text)
 
-## Ferramentas
+## :hammer_and_wrench: Ferramentas
 
 - [React](https://pt-br.reactjs.org/)
 - [Firebase](https://firebase.google.com/?hl=pt-br)
