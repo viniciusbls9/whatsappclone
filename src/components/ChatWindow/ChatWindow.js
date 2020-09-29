@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 
 import MessageItem from '../MessageItem/MessageItem';
+import Api from '../../Api';
 
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -12,7 +13,7 @@ import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 import './styles.css';
 
-function ChatWindow({ user }) {
+function ChatWindow({ user, data }) {
 
     const body = useRef();
 
@@ -25,57 +26,23 @@ function ChatWindow({ user }) {
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [text, setText] = useState('');
     const [listenig, setListening] = useState(false);
-    const [list, setList] = useState([
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-        {author: 0, body: 'blablablabblablblablablabblablblablablabblabl'},
-        {author: 1  , body: 'oioioiioi'},
-        {author: 1, body: 'falfalfalfalfal'},
-
-    ]);
+    const [list, setList] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         if(body.current.scrollHeight > body.current.offsetHeight) {
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
         }
     }, [list]);
+
+    useEffect(() => {
+        setList([]);
+        let unsub = Api.onChatContent(data.chatId, setList, setUsers);
+        return unsub;
+    }, [data.chatId]);
     
     const handleEmojiClick = (e, emojiObject) => {
-        setText(text + emojiObject.emoji0);
+        setText(text + emojiObject.emoji);
     }
 
     const handleOpenEmoji = () => {
@@ -103,7 +70,17 @@ function ChatWindow({ user }) {
     }
 
     const handleSendClick = () => {
+        if(text !== '') {
+            Api.sendMessage(data, user.id, 'text', text, users);
+            setText('');
+            setEmojiOpen(false);
+        }
+    }
 
+    const handleInputKeyUp = (e) => {
+        if(e.keyCode == 13) {
+            handleSendClick();
+        }
     }
 
 
@@ -112,8 +89,8 @@ function ChatWindow({ user }) {
             <div className="chat-window-header">
 
                 <div className="header-info">
-                    <img className="header-avatar" src="https://avatars3.githubusercontent.com/u/40433674?s=460&u=549c5647c3fbc3853cc210872ff1191aff7d03b6&v=4" alt="" />
-                    <div className="header-name">Vinicius Benedito</div>
+                    <img className="header-avatar" src={data.image} alt="" />
+                    <div className="header-name">{data.title}</div>
                 </div>
 
                 <div className="header-buttons">
@@ -174,6 +151,8 @@ function ChatWindow({ user }) {
                         placeholder="Digite uma mensagem"
                         value={text}
                         onChange={e => setText(e.target.value)}
+                        onKeyUp={handleInputKeyUp}
+                        autoFocus={true}
                     />
                 </div>
 
