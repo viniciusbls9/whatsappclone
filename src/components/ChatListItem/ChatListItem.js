@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 
 
 function ChatListItem({ onClick, active, data }) {
-  return (
-      <div className={`chat-list-item ${active ? 'active' : ''}`} onClick={onClick}>
-        <img className="chat-list-avatar" src={data.image} alt=""/>
-        <div className="chat-list-lines">
-          <div className="chat-list-line">
-            <div className="chat-list-name">{data.title}</div>
-            <div className="chat-list-date">19:00</div>
-          </div>
 
-          <div className="chat-list-line">
-            <div className="chat-list-last-msg">
-              <p>Lorem, ipsum dolor sit amet</p>
+    const [time, setTime] = useState('');
+
+    useEffect(() => {
+        if(data.lastMessageDate > 0) {
+            let d = new Date(data.lastMessageDate.seconds * 1000);
+            let hours = d.getHours();
+            let minutes = d.getMinutes();
+            hours = hours < 10 ? '0'+hours : hours;
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            setTime(`${hours}:${minutes}`);
+        }
+    }, [data]);
+
+    return (
+        <div className={`chat-list-item ${active ? 'active' : ''}`} onClick={onClick}>
+            <img className="chat-list-avatar" src={data.image} alt="" />
+            <div className="chat-list-lines">
+                <div className="chat-list-line">
+                    <div className="chat-list-name">{data.title}</div>
+                    <div className="chat-list-date">{time}</div>
+                </div>
+
+                <div className="chat-list-line">
+                    <div className="chat-list-last-msg">
+                        <p>{data.lastMessage}</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-  );
+    );
 }
 
 export default ChatListItem;
